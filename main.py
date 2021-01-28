@@ -15,7 +15,6 @@ from sklearn.cluster import KMeans
 from sklearn.ensemble import IsolationForest
 import streamlit as st
 from bokeh.plotting import figure
-
 def main():
     st.set_page_config(
     page_title="Oil Spill Dashboard",
