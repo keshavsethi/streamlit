@@ -15,7 +15,10 @@ from sklearn.cluster import KMeans
 from sklearn.ensemble import IsolationForest
 import streamlit as st
 from bokeh.plotting import figure
-from pandas.compat import StringIO
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 
 def main():
     st.set_page_config(
