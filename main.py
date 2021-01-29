@@ -184,10 +184,17 @@ def main():
 
         a = mv_data[mv_data['anomaly_pc1'] == 1] #anomaly
         b = mv_data[mv_data['anomaly_pc2'] == 1] #anomaly
+        a_count = a['timestamp'].value_count()         
+        b_count = b['timestamp'].value_count()   
+        anomaly_minor = a
+        anomaly_major = b      
+        if (a_count < b_count):
+            anomaly_minor = a
+        else:
+            anomaly_major = b 
         fig = plt.figure()
         plt.plot(mv_data[param], color='blue', label='Normal')
-        plt.plot(a[param], linestyle='none', marker='X', color='red', markersize=12, label='Anomaly1')
-        plt.plot(b[param], linestyle='none', marker='X', color='green', markersize=12, label='Anomaly2')
+        plt.plot(anomaly_minor[param], linestyle='none', marker='X', color='red', markersize=12, label='Anomaly')
         plt.xlabel('Date and Time')
         plt.ylabel(param)
         plt.title('Anomalies with given MMSI')
@@ -195,8 +202,7 @@ def main():
         plt.show()
         plt.gcf().autofmt_xdate()
         st.pyplot(fig)
-        data1 = a
-        data2 = b
+        data1 = anomaly_major
 
 
     if classifier == "K-Means clustering":
@@ -355,8 +361,18 @@ def main():
         st.write("Outlier Propotion(pc2): ", len(outliers_pc2)/len(mv_data))
         a = mv_data[mv_data['anomaly_pc1'] == 1] #anomaly
         b = mv_data[mv_data['anomaly_pc2'] == 1] #anomaly
-        data1 = a
-        data2 = b
+        a_count = a['timestamp'].value_count()         
+        b_count = b['timestamp'].value_count()   
+        anomaly_minor = a
+        anomaly_major = b      
+        if (a_count < b_count):
+            anomaly_minor = a
+            anomaly_major = b
+        else:
+            anomaly_major = a
+            anomaly_minor = b
+        data1 = anomaly_minor
+        data2 = anomaly_major
 
         fraction = st.number_input("Fraction",0.00,1.00,step=0.01,key='fraction')
         kmeans = KMeans(n_clusters=2, random_state=42)
@@ -410,8 +426,7 @@ def main():
         # visualization
         fig = plt.figure()
         plt.plot(mv_data[param], color='blue', label='Normal')
-        plt.plot(time_df[param], linestyle='none', marker='X', color='red', markersize=12, label='Anomaly2')
-        plt.plot(data1[param], linestyle='none', marker='X', color='red', markersize=12, label='Anomaly1')
+        plt.plot(time_df[param], linestyle='none', marker='X', color='red', markersize=12, label='Anomaly')
         plt.xlabel('Date and Time')
         plt.ylabel('Reading')
         plt.title('Anomalies')
