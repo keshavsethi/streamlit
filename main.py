@@ -44,7 +44,7 @@ def main():
         time_series_df.drop(['created_at','imo', 'name'], axis=1, inplace=True)
         time_series_df = time_series_df[time_series_df['speed'].notna()]
         time_series_df = time_series_df.reset_index(drop=True)
-        time_series_df.drop(time_series_df[time_series_df['speed'] == 0].index, inplace = True)
+        #time_series_df.drop(time_series_df[time_series_df['speed'] == 0].index, inplace = True)
         return time_series_df
 
     st.title("Oil spill prediction Dashboard :rocket:")
@@ -67,7 +67,7 @@ def main():
         time_series_df.drop(['created_at','imo', 'name'], axis=1, inplace=True)
         time_series_df = time_series_df[time_series_df['speed'].notna()]
         time_series_df = time_series_df.reset_index(drop=True)
-        time_series_df.drop(time_series_df[time_series_df['speed'] == 0].index, inplace = True)
+        #time_series_df.drop(time_series_df[time_series_df['speed'] == 0].index, inplace = True)
         st.balloons()
     else:
         time_series_df1 = load_raw_data('./Maritius_AOI_20200701_0731_full.csv')
@@ -81,7 +81,8 @@ def main():
     if(not_raw):
         st.subheader("AIS Dataset (Cleaned)")
         st.dataframe(time_series_df[:500].style.highlight_max(axis=0))
-
+    if(st.sidebar.checkbox("Remove 0 Speed")):
+        time_series_df.drop(time_series_df[time_series_df['speed'] == 0].index, inplace = True)
     vessels = time_series_df.mmsi.unique()
     st.markdown("Anomaly detection with time series data of: ",len(vessels))
     classifier = st.sidebar.selectbox("Classifier",("Select one model","Code", "Benchmark model(IQR)","K-Means clustering","Isolation Forest", "All of the above(Best)"))
@@ -93,7 +94,7 @@ def main():
     mv_data = time_series_df[time_series_df['mmsi']==mv_value]
 
 
-    if st.button("Plot all basic graphs"):
+    if st.sidebar.button("Plot all basic graphs"):
         p = figure(
             title='Speed Vs Time',
             x_axis_label='Timestamp',
@@ -124,7 +125,7 @@ def main():
         st.bokeh_chart(s, use_container_width=True)
     map_df = mv_data[time_series_df['latitude'].notna()]
     map_df = map_df[time_series_df['longitude'].notna()]
-    if st.button("Plot Map"):
+    if st.sidebar.button("Plot Map"):
         map_df.filter(['latitude', 'longitude'])
         st.map(map_df)
 
