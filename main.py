@@ -184,8 +184,8 @@ def main():
 
         a = mv_data[mv_data['anomaly_pc1'] == 1] #anomaly
         b = mv_data[mv_data['anomaly_pc2'] == 1] #anomaly
-        a_count = a['anomaly_pc1'].value_count()         
-        b_count = b['anomaly_pc2'].value_count()  
+        a_count = a['anomaly_pc1'].value_counts()         
+        b_count = b['anomaly_pc2'].value_counts()  
         anomaly_minor = a
         anomaly_major = b      
         if (a_count < b_count):
@@ -361,8 +361,8 @@ def main():
         st.write("Outlier Propotion(pc2): ", len(outliers_pc2)/len(mv_data))
         a = mv_data[mv_data['anomaly_pc1'] == 1] #anomaly
         b = mv_data[mv_data['anomaly_pc2'] == 1] #anomaly
-        a_count = a['anomaly_pc1'].value_count()         
-        b_count = b['anomaly_pc2'].value_count()   
+        a_count = a['anomaly_pc1'].value_counts()         
+        b_count = b['anomaly_pc2'].value_counts()   
         anomaly_minor = a
         anomaly_major = b      
         if (a_count < b_count):
