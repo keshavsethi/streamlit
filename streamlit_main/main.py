@@ -57,8 +57,8 @@ def main():
         time_series_df1 = load_raw_data(uploaded_file)
         time_series_df = load_data(uploaded_file)
     else:
-        time_series_df1 = load_raw_data('../Data/main/Maritius_AOI_20200701_0731_full.csv')
-        time_series_df = load_data('../Data/main/Maritius_AOI_20200701_0731_full.csv')
+        time_series_df1 = load_raw_data('Maritius_AOI_20200701_0731_full.csv')
+        time_series_df = load_data('Maritius_AOI_20200701_0731_full.csv')
 
     raw = st.sidebar.checkbox("Show Raw Dataset")
     not_raw = st.sidebar.checkbox("Show cleaned Dataset")
