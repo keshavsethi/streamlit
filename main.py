@@ -20,10 +20,9 @@ def main():
     page_title="Oil Spill Dashboard",
     page_icon=":ship:",
     layout="centered",
-    initial_sidebar_state="expanded",
-    )
+    initial_sidebar_state="expanded")
 
-
+    global train_upload
 
     def load_raw_data(x):
         # data
@@ -54,8 +53,11 @@ def main():
         uploaded_file = None
     if uploaded_file is not None:
         uploaded_file.seek(0)
-        time_series_df1 = load_raw_data(uploaded_file)
-        time_series_df = load_data(uploaded_file)
+        train_features = uploaded_file.read()
+        train_features = str(train_features,'utf-8')
+        train_features = StringIO(train_features)
+        time_series_df1 = load_raw_data(train_features)
+        time_series_df = load_data(train_features)
     else:
         time_series_df1 = load_raw_data('./Maritius_AOI_20200701_0731_full.csv')
         time_series_df = load_data('./Maritius_AOI_20200701_0731_full.csv')
