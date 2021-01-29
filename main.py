@@ -58,11 +58,16 @@ def main():
         uploaded_file = None
     if uploaded_file is not None:
         uploaded_file.seek(0)
-        train_features = uploaded_file.read()
-        train_features = str(train_features,'utf-8')
-        train_features = StringIO(train_features)
-        time_series_df1 = load_raw_data(train_features)
-        time_series_df = load_data(train_features)
+        time_series_df1=pd.read_csv(uploaded_file, low_memory=False)
+        time_series_df1.sort_values(by=['timestamp'], inplace=True, kind = "mergesort")
+        time_sorted_df1 = time_series_df1.sort_values(by=['timestamp'], inplace=True)
+        time_series_df1['timestamp'] = pd.to_datetime(time_series_df1['timestamp'])
+        time_series_df = time_series_df1
+        time_series_df.drop(["call_sign", "flag" ,"draught" , "ship_and_cargo_type",  "length", "width","eta" , "destination",  "status", "maneuver",  "accuracy" ,"collection_type" ,'mmsi_label'], axis=1, inplace=True)
+        time_series_df.drop(['created_at','imo', 'name'], axis=1, inplace=True)
+        time_series_df = time_series_df[time_series_df['speed'].notna()]
+        time_series_df = time_series_df.reset_index(drop=True)
+        time_series_df.drop(time_series_df[time_series_df['speed'] == 0].index, inplace = True)
     else:
         time_series_df1 = load_raw_data('./Maritius_AOI_20200701_0731_full.csv')
         time_series_df = load_data('./Maritius_AOI_20200701_0731_full.csv')
