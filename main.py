@@ -137,7 +137,7 @@ def main():
     rollmean = mv_data.resample(rule='D').mean()
     rollstd = mv_data.resample(rule='D').std()
 
-    if classifier == "BBenchmark model(IQR)":
+    if classifier == "Benchmark model(IQR)":
         
         df2 = mv_data
         names=df2.columns
