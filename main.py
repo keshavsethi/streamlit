@@ -161,11 +161,9 @@ def main():
         pca1 = principalDf['pc1'].pct_change()
         autocorrelation = pca1.dropna().autocorr()
         st.write('Autocorrelation(pc1) is: ', autocorrelation)
-        plot_acf(pca1.dropna(), lags=20, alpha=0.05)
         pca2 = principalDf['pc2'].pct_change()
         autocorrelation = pca2.autocorr()
         st.write('Autocorrelation(pc2) is: ', autocorrelation)
-        plot_acf(pca2.dropna(), lags=20, alpha=0.05)
         q1_pc1, q3_pc1 = mv_data['pc1'].quantile([0.25, 0.75])
         iqr_pc1 = q3_pc1 - q1_pc1
         lower_pc1 = q1_pc1 - (1.5*iqr_pc1)
