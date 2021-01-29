@@ -396,13 +396,12 @@ def main():
         st.write("Anomaly count isolated forest: ", mv_data['anomaly2'].value_counts())
         data4 = a
 
-        def intersection(lst1, lst2,lst3,lst4): 
+        def intersection(lst1, lst2,lst3): 
             lst5 = [value for value in lst2 if value in lst1]
             lst6 = [value for value in lst3 if value in lst5]
-            lst7 = [value for value in lst4 if value in lst6]
-            return lst7
+            return lst6
         
-        time_common = intersection(data1.index.unique() , data2.index.unique() , data3.index.unique() , data4.index.unique() )
+        time_common = intersection(data2.index.unique() , data3.index.unique() , data4.index.unique() )
         time_df = pd.DataFrame(columns = mv_data.columns, index = time_common) 
         for time in time_common:
             time_df.loc[time] = mv_data.loc[time]
@@ -411,6 +410,7 @@ def main():
         fig = plt.figure()
         plt.plot(mv_data[param], color='blue', label='Normal')
         plt.plot(time_df[param], linestyle='none', marker='X', color='red', markersize=12, label='Anomaly')
+        plt.plot(data1[param], linestyle='none', marker='X', color='red', markersize=12, label='Anomaly')
         plt.xlabel('Date and Time')
         plt.ylabel('Reading')
         plt.title('Anomalies')
