@@ -184,8 +184,8 @@ def main():
 
         a = mv_data[mv_data['anomaly_pc1'] == 1] #anomaly
         b = mv_data[mv_data['anomaly_pc2'] == 1] #anomaly
-        a_count = a['timestamp'].value_count()         
-        b_count = b['timestamp'].value_count()   
+        a_count = a['anomaly_pc1'].value_count()         
+        b_count = b['anomaly_pc2'].value_count()  
         anomaly_minor = a
         anomaly_major = b      
         if (a_count < b_count):
@@ -203,7 +203,7 @@ def main():
         plt.gcf().autofmt_xdate()
         st.pyplot(fig)
         data1 = anomaly_major
-
+        st.dataframe(anomaly_minor)
 
     if classifier == "K-Means clustering":
         df2 = mv_data
@@ -273,7 +273,7 @@ def main():
         plt.gcf().autofmt_xdate()
         st.pyplot(fig)
         data3 = a
-
+        st.dataframe(a)
     if classifier == "Isolation Forest":
         df2 = mv_data
         names=df2.columns
@@ -318,7 +318,7 @@ def main():
         plt.gcf().autofmt_xdate()
         st.pyplot(fig)
         data4 = a
-
+        st.dataframe(a)
 
 
     if classifier == "All of the above(Best)":
@@ -361,8 +361,8 @@ def main():
         st.write("Outlier Propotion(pc2): ", len(outliers_pc2)/len(mv_data))
         a = mv_data[mv_data['anomaly_pc1'] == 1] #anomaly
         b = mv_data[mv_data['anomaly_pc2'] == 1] #anomaly
-        a_count = a['timestamp'].value_count()         
-        b_count = b['timestamp'].value_count()   
+        a_count = a['anomaly_pc1'].value_count()         
+        b_count = b['anomaly_pc2'].value_count()   
         anomaly_minor = a
         anomaly_major = b      
         if (a_count < b_count):
