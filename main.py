@@ -68,6 +68,7 @@ def main():
         time_series_df = time_series_df[time_series_df['speed'].notna()]
         time_series_df = time_series_df.reset_index(drop=True)
         time_series_df.drop(time_series_df[time_series_df['speed'] == 0].index, inplace = True)
+        st.balloons()
     else:
         time_series_df1 = load_raw_data('./Maritius_AOI_20200701_0731_full.csv')
         time_series_df = load_data('./Maritius_AOI_20200701_0731_full.csv')
@@ -651,7 +652,7 @@ def main():
 '''
     if classifier == "Code":
         st.code(code, language='python')
-    st.balloons()
+
 if __name__ == '__main__':
     main()
 
