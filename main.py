@@ -68,7 +68,7 @@ def main():
         time_series_df = time_series_df[time_series_df['speed'].notna()]
         time_series_df = time_series_df.reset_index(drop=True)
         #time_series_df.drop(time_series_df[time_series_df['speed'] == 0].index, inplace = True)
-        st.balloons()
+
     else:
         time_series_df1 = load_raw_data('./Maritius_AOI_20200701_0731_full.csv')
         time_series_df = load_data('./Maritius_AOI_20200701_0731_full.csv')
@@ -94,7 +94,7 @@ def main():
     mv_data = time_series_df[time_series_df['mmsi']==mv_value]
 
 
-    if st.sidebar.button("Plot all basic graphs"):
+    if st.sidebar.checkbox("Plot graphs"):
         p = figure(
             title='Speed Vs Time',
             x_axis_label='Timestamp',
@@ -125,7 +125,7 @@ def main():
         st.bokeh_chart(s, use_container_width=True)
     map_df = mv_data[time_series_df['latitude'].notna()]
     map_df = map_df[time_series_df['longitude'].notna()]
-    if st.sidebar.button("Plot Map"):
+    if st.sidebar.checkbox("Plot Map"):
         map_df.filter(['latitude', 'longitude'])
         st.map(map_df)
 
@@ -136,7 +136,8 @@ def main():
     names=mv_data.columns
     rollmean = mv_data.resample(rule='D').mean()
     rollstd = mv_data.resample(rule='D').std()
-
+    if st.sidebar.button("Reload Model"): 
+        st.balloons()
     if classifier == "Benchmark model(IQR)":
         
         df2 = mv_data
@@ -409,8 +410,8 @@ def main():
         # visualization
         fig = plt.figure()
         plt.plot(mv_data[param], color='blue', label='Normal')
-        plt.plot(time_df[param], linestyle='none', marker='X', color='red', markersize=12, label='Anomaly')
-        plt.plot(data1[param], linestyle='none', marker='X', color='red', markersize=12, label='Anomaly')
+        plt.plot(time_df[param], linestyle='none', marker='X', color='red', markersize=12, label='Anomaly2')
+        plt.plot(data1[param], linestyle='none', marker='X', color='red', markersize=12, label='Anomaly1')
         plt.xlabel('Date and Time')
         plt.ylabel('Reading')
         plt.title('Anomalies')
