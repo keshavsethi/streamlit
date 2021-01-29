@@ -185,7 +185,7 @@ def main():
         a = mv_data[mv_data['anomaly_pc1'] == 1] #anomaly
         b = mv_data[mv_data['anomaly_pc2'] == 1] #anomaly
         a_count = a['anomaly_pc1'].value_counts()         
-        b_count = b['anomaly_pc2'].value_counts()  
+        b_count = b['anomaly_pc1'].value_counts()  
         anomaly_minor = a
         anomaly_major = b      
         if (a_count < b_count):
@@ -362,7 +362,7 @@ def main():
         a = mv_data[mv_data['anomaly_pc1'] == 1] #anomaly
         b = mv_data[mv_data['anomaly_pc2'] == 1] #anomaly
         a_count = a['anomaly_pc1'].value_counts()         
-        b_count = b['anomaly_pc2'].value_counts()   
+        b_count = b['anomaly_pc1'].value_counts()   
         anomaly_minor = a
         anomaly_major = b      
         if (a_count < b_count):
